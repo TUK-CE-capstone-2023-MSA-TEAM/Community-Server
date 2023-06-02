@@ -1,4 +1,4 @@
-package com.barbel.communityserver;
+package com.barbel.communityserver.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
