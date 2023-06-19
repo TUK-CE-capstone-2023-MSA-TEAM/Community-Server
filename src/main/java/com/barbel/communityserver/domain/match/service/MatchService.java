@@ -1,12 +1,11 @@
 package com.barbel.communityserver.domain.match.service;
 
-import com.barbel.communityserver.domain.match.dto.MatchDto;
+import com.barbel.communityserver.domain.match.dto.CurrentMatchDto;
+import com.barbel.communityserver.domain.match.dto.SaveMatchDto;
 import com.barbel.communityserver.domain.match.entity.Match;
 import com.barbel.communityserver.domain.match.repository.MatchRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -21,65 +20,73 @@ public class MatchService {
         this.matchRepository = matchRepository;
     }
 
-    public List<MatchDto> findAll()
+    public List<CurrentMatchDto> getAllMatchToMentor(String mentorEmail)
     {
-        List<MatchDto> list = new ArrayList<>();
+        List<CurrentMatchDto> list = new LinkedList<>();
 
-        matchRepository.findAll().forEach(
-                x->list.add(convert(x)));
-
-        return list;
-    }
-
-    public List<MatchDto> getMatchByMentorId(String id)
-    {
-        List<Match> matches = matchRepository.findAllByMentorEmail(id);
-
-        List<MatchDto> list = new LinkedList<>();
+        List<Match> matches = matchRepository.findAllByMentorEmail(mentorEmail);
 
         for(Match match : matches)
         {
-            list.add(convert(match));
+            list.add(
+                    new CurrentMatchDto(
+                       match.getId(),match.getMentorEmail(),match.getMenteeEmail(),
+                       match.getDate(),match.mentorOk,match.menteeOk
+                    )
+            );
         }
 
         return list;
     }
 
-    public List<MatchDto> getMatchByMenteeId(String id)
+    public List<CurrentMatchDto> getAllMatchToMentee(String menteeEmail)
     {
-        List<Match> matches = matchRepository.findAllByMenteeEmail(id);
+        List<CurrentMatchDto> list = new LinkedList<>();
 
-        List<MatchDto> list = new LinkedList<>();
+        List<Match> matches = matchRepository.findAllByMenteeEmail(menteeEmail);
 
         for(Match match : matches)
         {
-            list.add(convert(match));
+            list.add(
+                    new CurrentMatchDto(
+                            match.getId(),match.getMentorEmail(),match.getMenteeEmail(),
+                            match.getDate(),match.mentorOk,match.menteeOk
+                    )
+            );
         }
 
         return list;
     }
 
-    public MatchDto getMatch(String id)
+    public CurrentMatchDto acceptMatch(String matchId)
     {
-        Optional<Match> match = matchRepository.findById(id);
-        if(match.isPresent())
-        {
-            return convert(match.get());
-        }
-        else{
-            throw new IllegalArgumentException("해당 id의 매칭 정보가 존재하지 않습니다 : "+ id);
-        }
+        Optional<Match> matchTmp = matchRepository.findById(matchId);
+
+        Match match = matchTmp.get();
+
+        match.mentorOk = true;
+        match.menteeOk = true;
+
+        Match acceptMatch = matchRepository.save(match);
+
+        CurrentMatchDto result = new CurrentMatchDto(
+                acceptMatch.getId(),acceptMatch.getMentorEmail(),acceptMatch.getMenteeEmail(),
+                acceptMatch.getDate(),acceptMatch.mentorOk,acceptMatch.menteeOk
+        );
+
+        return result;
     }
 
-    public void saveMatch(MatchDto matchDto) throws ParseException
+    public void saveMatch(SaveMatchDto saveMatchDto) throws ParseException
     {
-        Date now = convertDate(matchDto.matchDate);
+        Date now = convertDate(saveMatchDto.matchDate);
 
-        Match match = Match.builder().mentorEmail(matchDto.mentorEmail)
-                .menteeEmail(matchDto.menteeEmail).date(now).build();
+        Match match = Match.builder().mentorEmail(saveMatchDto.mentorEmail)
+                .menteeEmail(saveMatchDto.menteeEmail).date(now).mentorOk(saveMatchDto.isMentor).menteeOk(!saveMatchDto.isMentor).build();
         matchRepository.save(match);
-
     }
+
+
 
     public Date convertDate(String date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -90,13 +97,5 @@ public class MatchService {
     {
         matchRepository.deleteById(id);
     }
-    public MatchDto convert(Match match)
-    {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = dateFormat.format(match.getDate());
 
-        MatchDto dto = new MatchDto(match.getId(),match.getMentorEmail(), match.getMenteeEmail(),strDate);
-
-        return dto;
-    }
 }

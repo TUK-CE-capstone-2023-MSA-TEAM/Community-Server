@@ -24,14 +24,19 @@ public class Match {
 
     private Date date;
 
+    public boolean mentorOk;
+
+    public boolean menteeOk;
 
     @Builder
-    public Match(String id,String mentorEmail,String menteeEmail,Date date)
+    public Match(String id,String mentorEmail,String menteeEmail,Date date,boolean mentorOk,boolean menteeOk)
     {
         this.id = id;
         this.mentorEmail = mentorEmail;
         this.menteeEmail = menteeEmail;
         this.date = date;
+        this.mentorOk = mentorOk;
+        this.menteeOk = menteeOk;
     }
 
 }

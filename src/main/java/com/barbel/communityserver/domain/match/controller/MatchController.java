@@ -1,10 +1,10 @@
 package com.barbel.communityserver.domain.match.controller;
 
-import com.barbel.communityserver.domain.match.dto.MatchDto;
+import com.barbel.communityserver.domain.match.dto.CurrentMatchDto;
+import com.barbel.communityserver.domain.match.dto.SaveMatchDto;
 import com.barbel.communityserver.domain.match.service.MatchService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.DispatcherServlet;
 
 import java.text.ParseException;
 import java.util.List;
@@ -20,39 +20,35 @@ public class MatchController {
         this.matchService = matchService;
     }
 
-    @GetMapping
-    public List<MatchDto> start()
+    @Description("매칭 수락 : 매칭 id로")
+    @GetMapping("/accept/match/{matchId}")
+    public CurrentMatchDto acceptMatch(@PathVariable String matchId)
     {
-        List<MatchDto> list = matchService.findAll();
-
-        return list;
+        return matchService.acceptMatch(matchId);
     }
 
-    @GetMapping("/get/mentor/{id}")
-    public List<MatchDto> matchmentorid(@PathVariable String id)
+    @Description("해당 멘티에게 온 매칭 정보 보기 : list")
+    @GetMapping("/get/mentee/{menteeId}")
+    public List<CurrentMatchDto> getMatchByMentee(@PathVariable String menteeId)
     {
-        return matchService.getMatchByMentorId(id);
+        return matchService.getAllMatchToMentee(menteeId);
     }
 
-    @GetMapping("/get/mentee/{id}")
-    public List<MatchDto> matchmenteeid(@PathVariable String id)
+    @Description("해당 멘토에게 온 매칭 정보 보기 : list")
+    @GetMapping("/get/mentor/{mentorId}")
+    public List<CurrentMatchDto> getMatchByMentor(@PathVariable String mentorId)
     {
-        return matchService.getMatchByMenteeId(id);
+        return matchService.getAllMatchToMentor(mentorId);
     }
 
-
-    @GetMapping("/get/{id}")
-    public MatchDto matchGet(@PathVariable String id)
-    {
-        return matchService.getMatch(id);
-    }
-
+    @Description("매칭 요청 보내기 : isMentor 로 보낸 사람이 멘토인지 멘티인지 구분")
     @PostMapping("/save")
-    public void matchSave(MatchDto matchDto) throws ParseException
+    public void matchSave(SaveMatchDto saveMatchDto) throws ParseException
     {
-        matchService.saveMatch(matchDto);
+        matchService.saveMatch(saveMatchDto);
     }
 
+    @Description("id로 매칭 삭제")
     @GetMapping("/delete/{id}")
     public void matchDelete(@PathVariable String id)
     {
