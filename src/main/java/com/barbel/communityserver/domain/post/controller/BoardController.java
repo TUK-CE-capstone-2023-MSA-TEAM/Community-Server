@@ -4,6 +4,7 @@ import com.barbel.communityserver.domain.post.dto.BoardDto;
 import com.barbel.communityserver.domain.post.dto.BoardReplyDto;
 import com.barbel.communityserver.domain.post.entity.Comment;
 import com.barbel.communityserver.domain.post.service.BoardService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.*;
@@ -25,19 +26,19 @@ public class BoardController {
     }
 
     // 후에 page 단위로 분리할 수 있도록 수정 필요
-    @Description("게시판 전체 불러오기")
+    @Operation(summary = "게시판 전체 불러오기")
     @GetMapping()
     public List<BoardReplyDto> getAll()
     {
         return boardService.getAll();
     }
-    @Description("게시판 id로 게시판 검색")
+    @Operation(summary = "게시판 id로 게시판 검색")
     @GetMapping("/get/{id}")
     public BoardReplyDto getBoard(@PathVariable  String id) throws RuntimeException
     {
         return boardService.getBoard(id);
     }
-    @Description("게시판 저장")
+    @Operation(summary = "게시판 저장")
     @PostMapping("/save")
     public void saveBoard(@RequestBody BoardDto boardDto)
     {
@@ -45,19 +46,19 @@ public class BoardController {
     }
 
     // userId를 개인 정보창에서 가져 올지 , 회원 디비에서 가져 올지 결정 필요
-    @Description("게시판 삭제")
+    @Operation(summary = "게시판 삭제")
     @DeleteMapping("/delete/{id}/{userId}")
     public void deleteBoard(@PathVariable String id,@PathVariable String userId)
     {
         boardService.deleteBoardById(userId,id);
     }
-    @Description("게시판 사진 저장")
+    @Operation(summary = "게시판 사진 저장")
     @PostMapping("/file/{userEmail}")
     public void fileUpload(@RequestPart MultipartFile file,@PathVariable String userEmail) throws IOException {
         boardService.uploadFile(file,userEmail);
     }
 
-    @Description("게시판 id로 댓글들 불러오기")
+    @Operation(summary = "게시판 id로 댓글들 불러오기")
     @GetMapping("/get/comment/{boardId}")
     public List<Comment> getAllComments(@PathVariable String boardId)
     {
@@ -69,7 +70,7 @@ public class BoardController {
         List<String> fileNames = boardService.get();
         return fileNames;
     }
-    @Description("게시판 작성자 id로 게시판 정보 가져오기")
+    @Operation(summary = "게시판 작성자 id로 게시판 정보 가져오기")
     @GetMapping("/get/user/{userId}")
     public List<BoardReplyDto> getUserBoard(@PathVariable String userId)
     {

@@ -1,22 +1,15 @@
 package com.barbel.communityserver.domain.match.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SaveMatchDto {
     public String mentorEmail;
     public String menteeEmail;
     public String matchDate;
-
     public boolean isMentor;
-
-    public SaveMatchDto(String mentorEmail, String menteeEmail, String date, boolean isMentor)
-    {
-        this.mentorEmail = mentorEmail;
-        this.menteeEmail = menteeEmail;
-        this.matchDate = date;
-        this.isMentor = isMentor;
-    }
-
-
 }

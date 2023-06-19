@@ -14,6 +14,6 @@ public class CurrentMatchDto {
     public String mentorEmail;
     public String menteeEmail;
     public Date matchDate;
-    public boolean MentorOk;
-    public boolean MenteeOk;
+    public boolean mentorOk;
+    public boolean menteeOk;
 }
