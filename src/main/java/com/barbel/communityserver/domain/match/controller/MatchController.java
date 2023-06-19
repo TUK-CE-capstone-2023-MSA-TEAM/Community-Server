@@ -43,7 +43,7 @@ public class MatchController {
 
     @Description("매칭 요청 보내기 : isMentor 로 보낸 사람이 멘토인지 멘티인지 구분")
     @PostMapping("/save")
-    public void matchSave(SaveMatchDto saveMatchDto) throws ParseException
+    public void matchSave(@RequestBody SaveMatchDto saveMatchDto) throws ParseException
     {
         matchService.saveMatch(saveMatchDto);
     }

@@ -16,19 +16,16 @@ import java.util.List;
 public class EstimateController {
 
     private final EstimateService estimateService;
-    private final EstimateRepository estimateRepository;
 
     @Autowired
-    EstimateController(EstimateService estimateService,
-                       EstimateRepository estimateRepository)
+    EstimateController(EstimateService estimateService)
     {
         this.estimateService = estimateService;
-        this.estimateRepository = estimateRepository;
     }
 
     @Description("견적서 작성 : 금액 , 작성자 id , 내용 , type(운동 or 커피 등등)")
     @PostMapping("/save")
-    public void saveEstimate(SaveEstimateDto saveEstimateDto)
+    public void saveEstimate(@RequestBody SaveEstimateDto saveEstimateDto)
     {
         estimateService.saveEstimate(saveEstimateDto);
     }
