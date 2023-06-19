@@ -7,9 +7,4 @@ import org.springframework.web.servlet.DispatcherServlet;
 @SpringBootTest
 class CommunityserverApplicationTests {
 
-  @Test
-  void contextLoads() {
-
-  }
-
 }
