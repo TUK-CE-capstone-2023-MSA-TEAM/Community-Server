@@ -13,6 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardReplyDto {
+
+    public String boardId;
+
     @NotBlank
     public String title;
 

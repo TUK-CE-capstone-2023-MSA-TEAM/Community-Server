@@ -39,6 +39,7 @@ public class BoardService {
     public BoardReplyDto convert(Board board)
     {
         BoardReplyDto boardDto = new BoardReplyDto();
+        boardDto.setBoardId(board.getId());
         boardDto.setTitle(board.getTitle());
         boardDto.setLocation(board.getLocation());
         boardDto.setContent(board.getContent());
@@ -60,6 +61,20 @@ public class BoardService {
         }
 
         return boardDtoList;
+    }
+
+    public List<BoardReplyDto> getByUserId(String userId)
+    {
+        List<Board> list = boardRepository.findAllByUserId(userId);
+
+        List<BoardReplyDto> boardReplyDtoList = new LinkedList<>();
+
+        for(Board board : list)
+        {
+            boardReplyDtoList.add(convert(board));
+        }
+
+        return boardReplyDtoList;
     }
 
     public void saveBoard(BoardDto boardDto)

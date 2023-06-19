@@ -15,5 +15,9 @@ public interface MatchRepository extends MongoRepository<Match,String> {
     @Override
     List<Match> findAll();
 
+    List<Match> findAllByMenteeEmail(String email);
+
+    List<Match> findAllByMentorEmail(String email);
+
     void deleteById(String id);
 }

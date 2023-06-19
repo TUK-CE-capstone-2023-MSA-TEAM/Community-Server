@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MatchService {
@@ -30,6 +27,34 @@ public class MatchService {
 
         matchRepository.findAll().forEach(
                 x->list.add(convert(x)));
+
+        return list;
+    }
+
+    public List<MatchDto> getMatchByMentorId(String id)
+    {
+        List<Match> matches = matchRepository.findAllByMentorEmail(id);
+
+        List<MatchDto> list = new LinkedList<>();
+
+        for(Match match : matches)
+        {
+            list.add(convert(match));
+        }
+
+        return list;
+    }
+
+    public List<MatchDto> getMatchByMenteeId(String id)
+    {
+        List<Match> matches = matchRepository.findAllByMenteeEmail(id);
+
+        List<MatchDto> list = new LinkedList<>();
+
+        for(Match match : matches)
+        {
+            list.add(convert(match));
+        }
 
         return list;
     }
@@ -70,7 +95,7 @@ public class MatchService {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strDate = dateFormat.format(match.getDate());
 
-        MatchDto dto = new MatchDto(match.getMentorEmail(), match.getMenteeEmail(),strDate);
+        MatchDto dto = new MatchDto(match.getId(),match.getMentorEmail(), match.getMenteeEmail(),strDate);
 
         return dto;
     }

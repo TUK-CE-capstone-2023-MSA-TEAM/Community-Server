@@ -9,12 +9,14 @@ import java.util.Date;
 @Data
 public class MatchDto {
 
+    public String matchId;
     public String mentorEmail;
     public String menteeEmail;
     public String matchDate;
 
-    public MatchDto(String mentorEmail,String menteeEmail,String date)
+    public MatchDto(String matchId,String mentorEmail,String menteeEmail,String date)
     {
+        this.matchId = matchId;
         this.mentorEmail = mentorEmail;
         this.menteeEmail = menteeEmail;
         this.matchDate = date;

@@ -28,7 +28,7 @@ public class CommentService {
     public CommentDto convert(Comment comment)
     {
         CommentDto commentDto = new CommentDto();
-
+        commentDto.commentId = comment.getId();
         commentDto.boardId = comment.getBoardId();
         commentDto.content = comment.getContent();
         commentDto.childList = comment.getChildList();

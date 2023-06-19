@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CommentDto {
 
+    public String commentId;
     @NotBlank
     public String boardId;
 

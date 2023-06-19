@@ -7,8 +7,8 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class BoardDto {
     @NotBlank
     public String title;

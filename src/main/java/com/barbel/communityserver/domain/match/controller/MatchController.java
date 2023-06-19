@@ -28,6 +28,19 @@ public class MatchController {
         return list;
     }
 
+    @GetMapping("/get/mentor/{id}")
+    public List<MatchDto> matchmentorid(@PathVariable String id)
+    {
+        return matchService.getMatchByMentorId(id);
+    }
+
+    @GetMapping("/get/mentee/{id}")
+    public List<MatchDto> matchmenteeid(@PathVariable String id)
+    {
+        return matchService.getMatchByMenteeId(id);
+    }
+
+
     @GetMapping("/get/{id}")
     public MatchDto matchGet(@PathVariable String id)
     {

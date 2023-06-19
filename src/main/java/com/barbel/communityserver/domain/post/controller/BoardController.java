@@ -65,4 +65,10 @@ public class BoardController {
         return fileNames;
     }
 
+    @GetMapping("/get/user/{userId}")
+    public List<BoardReplyDto> getUserBoard(@PathVariable String userId)
+    {
+        return boardService.getByUserId(userId);
+    }
+
 }
