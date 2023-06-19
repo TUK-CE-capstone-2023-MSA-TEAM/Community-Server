@@ -25,6 +25,13 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
+    public String commentString(String id)
+    {
+        Comment comment = commentRepository.getById(id);
+
+        return comment.getContent();
+    }
+
     public CommentDto convert(Comment comment)
     {
         CommentDto commentDto = new CommentDto();

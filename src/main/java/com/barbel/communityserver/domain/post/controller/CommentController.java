@@ -37,9 +37,9 @@ public class CommentController {
         commentService.updateGood(id);
     }
 
-    @GetMapping("/test")
-    public String test1()
+    @GetMapping("/get/{commentId}")
+    public String getCommentString(@PathVariable String commentId)
     {
-        return "hello";
+        return commentService.commentString(commentId);
     }
 }
