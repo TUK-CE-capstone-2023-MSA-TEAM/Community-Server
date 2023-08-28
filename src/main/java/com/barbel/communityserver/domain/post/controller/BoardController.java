@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("community/board")
+@RequestMapping("/community/board")
 public class BoardController {
 
     private BoardService boardService;

@@ -4,14 +4,14 @@ import com.barbel.communityserver.domain.match.dto.CurrentMatchDto;
 import com.barbel.communityserver.domain.match.dto.SaveMatchDto;
 import com.barbel.communityserver.domain.match.service.MatchService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.context.annotation.Description;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/match")
+@RequestMapping("/community/match")
 public class MatchController {
 
     private MatchService matchService;

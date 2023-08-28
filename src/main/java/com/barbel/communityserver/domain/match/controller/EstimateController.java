@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/estimate")
+@RequestMapping("/community/estimate")
 public class EstimateController {
 
     private final EstimateService estimateService;
